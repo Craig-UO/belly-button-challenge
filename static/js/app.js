@@ -7,8 +7,9 @@ function buildMetadata(sample) {
   
       // Filter the data for the object with the desired sample number (the id)
         let metaData = data.metadata;
-        let filteredArray = metaData.filter(sampleObj => sampleObj.id);
+        let filteredArray = metaData.filter(sampleObj => sampleObj.id ==  sample);
         let result = filteredArray[0];
+        //console.log(sampleObj.id);
   
       // Select the panel with id of `#sample-metadata`
       let panel = d3.select("#sample-metadata");
@@ -32,21 +33,45 @@ function buildMetadata(sample) {
     let url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json"
     d3.json(url).then((data) => {
       // Filter the data for the object with the desired sample number (the id)
-      let metaData = data.metadata;
-      let filteredArray = metaData.filter(sampleObj => sampleObj.id);
+      let sampleData = data.samples;
+      let filteredArray = sampleData.filter(sampleObj => sampleObj.id == sample);
       let result = filteredArray[0];
-  
+            
       // Pull the desired information (ids, labels, values) from your filtered data
-  
+      let otu_ids = result.otu_ids;
+      let otu_labels = result.otu_labels;
+      let sample_values = result.sample_values;
+      console.log(otu_labels);
   
       // Build a Bubble Chart
-      
+      let trace1 = {
+        type: "scatter"
+        ,mode: "markers"
+        ,x: otu_ids
+        ,y: sample_values
+        ,text: otu_labels
+        ,marker: {
+          size: sample_values
+          ,color: otu_ids
+        }
+      };
+      let data1 = [trace1];
+
+      let layout = {
+        title: 'Sample Value by ID'
+      };
+
+      Plotly.newPlot("bubble", data1, layout);
   
       // Slice the data for your bar chart and order it (you can just use reverse)
   
   
       // Build a Horizontal Bar Chart
-    })
+      let trace2 = {
+
+      };
+
+    });
   };
   
   function init() {
