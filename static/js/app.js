@@ -69,7 +69,6 @@ function buildMetadata(sample) {
       let topIds = result.otu_ids.sort((a, b) => b.sample_values - a.sample_values).slice(0,10);
       let topLabels = result.otu_labels.sort((a, b) => b.sample_values - a.sample_values).slice(0,10);
       let topSamples = result.sample_values.sort((a, b) => b.sample_values - a.sample_values).slice(0,10);
-      console.log(topSamples);
       
       let revTopIds = topIds.reverse();
       let revTopLabels = topLabels.reverse();
