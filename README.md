@@ -4,4 +4,4 @@ The top directory contains the index.html file and the samples.json file which c
 
 The directory /static/js contains the file app.js which has the code produced by the student for the assignment.
 
-The code has been deployed to GitHub Pages at https://github.com/Craig-UO/belly-button-challenge/settings/pages
+The code has been deployed to GitHub Pages at https://craig-uo.github.io/belly-button-challenge/
