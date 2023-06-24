@@ -9,7 +9,6 @@ function buildMetadata(sample) {
         let metaData = data.metadata;
         let filteredArray = metaData.filter(sampleObj => sampleObj.id ==  sample);
         let result = filteredArray[0];
-        //console.log(sampleObj.id);
   
       // Select the panel with id of `#sample-metadata`
       let panel = d3.select("#sample-metadata");
@@ -41,7 +40,6 @@ function buildMetadata(sample) {
       let otu_ids = result.otu_ids;
       let otu_labels = result.otu_labels;
       let sample_values = result.sample_values;
-      console.log(otu_labels);
   
       // Build a Bubble Chart
       let trace1 = {
@@ -57,19 +55,44 @@ function buildMetadata(sample) {
       };
       let data1 = [trace1];
 
-      let layout = {
-        title: 'Sample Value by ID'
+      let layout1 = {
+        title: `Sample Values by OTU ID for Sample Name ${sample}`
+        ,xaxis: {
+          title:  "OTU ID"
+        }
       };
 
-      Plotly.newPlot("bubble", data1, layout);
+      Plotly.newPlot("bubble", data1, layout1);
   
       // Slice the data for your bar chart and order it (you can just use reverse)
-  
-  
+      
+      let topIds = result.otu_ids.sort((a, b) => b.sample_values - a.sample_values).slice(0,10);
+      let topLabels = result.otu_labels.sort((a, b) => b.sample_values - a.sample_values).slice(0,10);
+      let topSamples = result.sample_values.sort((a, b) => b.sample_values - a.sample_values).slice(0,10);
+      console.log(topSamples);
+      
+      let revTopIds = topIds.reverse();
+      let revTopLabels = topLabels.reverse();
+      let revTopSamples = topSamples.reverse();
+      let yLabels = revTopIds.map(a => `OTU ${a}`);
+
+              
       // Build a Horizontal Bar Chart
       let trace2 = {
+        x: revTopSamples
+        ,y: yLabels
+        ,text: revTopLabels
+        ,type: "bar"
+        ,orientation: "h"
+       };
 
-      };
+       let data2 = [trace2];
+
+       let layout2 = {
+        title:  `Top 10 Sample Values for Sample Name ${sample}`
+       };
+
+       Plotly.newPlot("bar", data2, layout2);
 
     });
   };
